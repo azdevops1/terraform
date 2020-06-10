@@ -40,7 +40,7 @@ resource "aws_vpc" "main" {
 	enable_dns_hostnames = "true"
 	}
 	
-	tags {
+	tags = {
 		Name        = "${var.vpc_name}"
 		Description = "${var.vpc_description}"
 	}
@@ -59,7 +59,7 @@ resource "aws_subnet" "public_subnet_az1" {
   cidr_block        = "${cidrsubnet("${var.cidr_block}", 10, 3)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
 
-  tags {
+  tags = {
     Name = "${aws_vpc.main.id}-public-subnet-az1"
   }
 }
@@ -79,7 +79,7 @@ resource "aws_subnet" "nat_subnet_az1" {
   cidr_block        = "${cidrsubnet("${var.cidr_block}", 12, 4076)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
 
-  tags {
+  tags = {
     Name = "${aws_vpc.main.id}-NatGatewayPublicSubnet1"
   }
 }
@@ -94,7 +94,7 @@ resource "aws_route_table_association" "nat_gw_1" {
 #################################
 resource "aws_internet_gateway" "internet" {
 	vpc_id = "${aws_vpc.main.id}"
-	tags {
+	tags = {
 	Name = "${aws_vpc.main.id}-internet_gateway"
 	}
 	lifecycle {
@@ -114,7 +114,7 @@ resource "aws_route_table" "public_route_table" {
 		gateway_id = "${aws_internet_gateway.internet.id}"
 	}
 
-	tags {
+	tags = {
 		Name = "${aws_vpc.main.id}-PublicRouteTable"
 	}
 }
@@ -126,7 +126,7 @@ resource "aws_route_table" "public_route_table" {
 resource "aws_route_table" "private_route_table_az1" {
 	vpc_id = "${aws_vpc.main.id}"
 
-	tags {
+	tags = {
 		Name = "${aws_vpc.main.id}-PrivateRouteTable-AZ1"
 	}
 }
@@ -135,7 +135,7 @@ resource "aws_route_table" "private_route_table_az1" {
 resource "aws_route_table" "private_route_table_az2" {
 	vpc_id = "${aws_vpc.main.id}"
 
-	tags {
+	tags = {
 		Name = "${aws_vpc.main.id}-PrivateRouteTable-AZ2"
 	}	
 }
@@ -144,7 +144,7 @@ resource "aws_route_table" "private_route_table_az2" {
 resource "aws_route_table" "private_route_table_az3" {
 	vpc_id = "${aws_vpc.main.id}"
 
-	tags {
+	tags = {
 		Name = "${aws_vpc.main.id}-PrivateRouteTable-AZ3"
   }
 }
